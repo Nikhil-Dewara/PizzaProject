@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-sm-6">
+                <h4>Order Summary</h4>
+                <hr>
+                {% for item in cart_items %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5>Product: {{item.product.title}}</h5>
+                            <p>Quantity: {{item.quantity}}</p>
+                            <p class="fw-bold">Price: {{item.product.discounted_price}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                <p class="fw-bold">Total Cost + Rs.40 = {{totalamount}}</p>
+            </div>
+
+            <div class="col-sm-4 offset-sm-1">
+                <h4>Select Shipping Address</h4>
+                <hr>
+                <form action="" method="post" id="myform">
+                    {% csrf_token %}
+                    {% for ad in add %}
+                        <div class="card">
+                            <div class="card-body">
+                                <h5>{{ad.name}}</h5>
+                                <p>Mobile : {{ad.mobile}}</p>
+                                <p>{{ad.location}} {{ad.city}} - {{ad.pincode}}</p>
+                            </div>
+                        </div>
+                        <div class="form-check mt-2 mb-5">
+                            <input type="radio" name="custid" class="form-check-input" id="custadd{{forloop.counter}}" value="{{ad.id}}">
+                            <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">
+                                Address :{{forloop.counter}}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    <div class="form-check mb-3">
+                        <label for="totamount" class="form-label">Total Amount</label>
+                        <input type="number" class="form-control" name="totamount" value="{{totalamount}}" readonly>
+                    </div>
+
+                    <div class="text-end">
+                        <button id="razorpay-button1" type="button" class="btn btn-warning mt-3 px-5 fw-bold">Proceed to Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Razorpay Payment Integration -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script type="text/javascript">
+        document.getElementById('razorpay-button1').onclick = function(e){
+            var options = {
+                "key": "{{ razorpay_key_id }}", // Your Razorpay API Key
+                "amount": "{{ totalamount|floatformat:2 }}", // Amount to be paid, in paise
+                "currency": "INR",
+                "name": "Pizza Zone",
+                "description": "Payment for your order",
+                "image": "/static/img/logo.jpg",  // Logo for the Razorpay popup
+                "order_id": "{{ razorpay_order_id }}", // Razorpay Order ID
+                "handler": function (response){
+                    // After payment is successful, we can send payment details to the server
+                    alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
+                    
+                    // Send the payment details to your backend to verify and finalize the order
+                    var data = {
+                        'razorpay_payment_id': response.razorpay_payment_id,
+                        'razorpay_order_id': response.razorpay_order_id,
+                        'razorpay_signature': response.razorpay_signature
+                    };
+        
+                    // Make an AJAX POST request to verify the payment
+                    $.ajax({
+                        url: '{% url "verify_payment" %}',
+                        method: 'POST',
+                        data: data,
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                alert('Payment verified successfully!');
+                                // Optionally, redirect to a success page or update UI
+                            } else {
+                                alert('Payment verification failed!');
+                            }
+                        },
+                        error: function() {
+                            alert('Error occurred during payment verification');
+                        }
+                    });
+                },
+                "prefill": {
+                    "name": "Customer Name",
+                    "email": "customer@example.com",
+                    "contact": "9999999999"
+                },
+                "notes": {
+                    "address": "123 Street"
+                },
+                "theme": {
+                    "color": "#F37254"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+        }
+        
+    </script>
+
+{% endblock content %}

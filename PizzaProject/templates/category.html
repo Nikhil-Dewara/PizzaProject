@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block  content %}
+        <!-- Page Header Start -->
+        <div class="page-header" style="margin-bottom: 10px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Menu!</h2>
+                    </div>
+                    <div class="col-12">
+                        <p style="color: rgb(236, 236, 236); font-weight: 800;">Wel-Come TO Pizza Zone! What you like to have
+                    </div>
+                    <div class="col-12 text-center">
+                        <a class="dropdown-item d-inline" href="{% url 'category' val='Veg' %}">Veg</a> /
+                        <a class="dropdown-item d-inline" href="{% url 'category' val='Non-Veg' %}">Non-Veg</a> /
+                        <a class="dropdown-item d-inline" href="{% url 'category' val='Combo' %}">Combo</a>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <!-- Page Header End -->
+        <div style="background-color: #ffcc00; padding: 10px;">
+            <marquee behavior="scroll" scrollamount="10" direction="left" style="color: #d90429; font-weight: bold; font-size: 18px;">
+                🍕 Hot Offer Alert! Get 50% OFF on all pizzas! Use Code: PIZZA50. Order Now! 🍕
+            </marquee>
+        </div>
+        <div class="container my-2 " >
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="list-group" style="border: 2px solid #e02929; margin-bottom: 5px;">
+                        <video autoplay muted loop src="{% static 'img/pvidio.mp4' %}" style="width: 100%; height: auto;"></video>
+                    </div>
+                    <div style="height: 500px; width: 100%; border: 2px solid black;">
+                        <img src="{% static 'img/menupizza.jpg' %}" alt="Image" style="height: 100%; width: 100%; object-fit: cover;">
+                    </div>
+                                
+                </div>
+                <div class="col-sm-10">
+                    <div class="row">
+                        {% for prod in product %}
+                            <div class="col text-center mb-4">
+                                <a href="{% url 'product_detail' prod.id %}" class="btn">
+
+                                    <div>
+                                        <img src="{{prod.product_image.url}}" width="250px" height="250px" style="border: 2px solid black;"/>
+                                        <div class="fw-bold">{{prod.title}}</div>
+                                        <div class="fw-bold text-danger">
+                                             Rs.{{prod.discounted_price}}/-
+                                             <small class="fw-light text-decoration-line-through">{{prod.selling_price}}</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock content %}

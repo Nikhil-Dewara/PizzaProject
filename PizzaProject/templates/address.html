@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Profile</h2>
+            </div>
+            <div class="col-12">
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<div class="container my-5">
+    <div class="row">
+        <!-- User Welcome Section -->
+        <div class="col-sm-3">
+            <h3>Welcome</h3>
+            <hr>
+            <h4 class="text-capitalize">{{ request.user }}</h4> <!-- Username -->
+            <ul class="list-unstyled mt-4">
+                <li class="d-grid">
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary">Profile</a>
+                </li>
+                <li class="d-grid my-2">
+                    <a href="#" class="btn btn-outline-primary">Address</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-8 offset-sm-1">
+            <div class="row">
+                {% for ad in add %}
+                    <div class="col-sm-6">
+                        <div class="card m-2 ">
+                            <div class="card-body bg-dark ">
+                                <h3 style="color: white;">Address{{forloop.counter}}</h3>
+                                <p style="color: white;">Name: {{ad.name}}</p>
+                                <p style="color: white;">locality: {{ad.locality}}</p>
+                                <p style="color: white;">Mobile: {{ad.mobile}}</p>
+                                <p style="color: white;">City: {{ad.city}}</p>
+                                <p style="color: white;">Pincode: {{ad.pincode}}</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div> 
+
+
+    </div>
+</div>
+{% endblock content %}

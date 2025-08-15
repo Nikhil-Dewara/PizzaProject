@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+{% block  content %}
+        <!-- Page Header Start -->
+        <div class="page-header" style="margin-bottom: 10px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Menu!</h2>
+                    </div>
+                    <div class="col-12">
+                        <p style="color: rgb(236, 236, 236); font-weight: 800;">Wel-Come TO Pizza Zone! What you like to have
+                    </div>
+
+                    <div class="col-12">
+                        <p>
+                             <a href="{% url 'category' val='Veg' %}" class="glow-link"> Want to add more 🍕🍕?</a>
+                        </p>
+                    </div>    
+
+                </div>
+            </div>
+        </div>
+        <style>
+            .glow-link {
+                color: #ffffff; /* Text color (white) */
+                text-decoration: none;
+                position: relative;
+                font-weight: bold;
+                animation: glow 1.5s infinite; /* Glow animation */
+            }
+        
+            @keyframes glow {
+                0% {
+                    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+                }
+                50% {
+                    text-shadow: 0 0 10px #702121, 0 0 20px #702121, 0 0 40px #702121, 0 0 60px #702121;
+                }
+                100% {
+                    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+                }
+            }
+        
+            .glow-link:hover {
+                text-shadow: 0 0 20px #ffffff, 0 0 40px #ffffff, 0 0 60px #ffffff;
+                transition: text-shadow 0.3s ease-in-out;
+            }
+        </style>
+        <!-- Page Header End -->
+        <div class="container">
+            <div class="row flex justify-content-between">
+                <div class="img2 col-lg-5" style="height: 500px; width: auto;">
+                    <img src="{{product.product_image.url}}" style="border: 2px solid black; border-radius: 10%;"  class="image col-xs-6 col-sm-12 col-lg-12 mt-1 text-sm-center w-100 h-75 " alt="">
+                    
+                </div>
+                <div class="productdetails col-lg-5 my-1 bg-danger " style="height: 500px;">
+                    <h1 style="font-family: Georgia; font-size: 37px;color: white;">{{product.title}}</h1>
+                    <p style="color: white;">
+                        Product details
+                        <ul type="square">
+                            <li style="color: white;">{{product.description}}</li>
+                            <li style="color: white;">A baked Italian dish of flattened bread dough covered with tomato sauce, cheese, and other topping</li>
+                            <li style="color: white;">Size-7inch</li>
+                        </ul>
+                    </p>
+                    <hr>
+                    <h2 style="color: white;" class="text-center">Discounted-Price: Rs.{{product.discounted_price}}/-</h2>
+                    <div style="text-align: center;">
+                        <small style="color: black; font-weight:900" class="fw-light text-decoration-line-through">Original-Price:{{product.selling_price}}</small>
+                    </div>
+                    <hr>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                        <!-- Add to Cart Form -->
+                        <form action="{% url 'add-to-cart' %}" class="d-inline">
+                            <input type="hidden" name="prod_id" value="{{product.id}}"/>
+                            <button type="submit" class="btn btn-outline-warning shadow px-5 py-2" style="border-radius: 50px; height: 50px;">
+                                Add to Cart
+                            </button>
+                        </form>
+                    
+                        <!-- Order Now Button -->
+                        <div class="btn btn-outline-dark shadow px-5 py-2" style="border-radius: 50px; height: 50px; text-align: center;">
+                            <a href="{% url 'checkout' %}" class="text-decoration-none text-white" style="line-height: 35px;">Order Now!</a>
+                        </div>
+                    </div>                  
+                    
+                </div>
+            </div>
+        </div>
+{% endblock content %}
+
+

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PizzaZone</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="Free Website Template" name="keywords" />
+    <meta content="Free Website Template" name="description" />
+
+    <!-- Favicon -->
+    <link href="{% static 'img/logo.jpg' %}" rel="icon" />
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Libraries -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="/static/lib/animate/animate.min.css" rel="stylesheet" />
+    <link
+      href="/static/lib/owlcarousel/assets/owl.carousel.min.css"
+      rel="stylesheet"
+    />
+    <link href="/static/lib/flaticon/font/flaticon.css" rel="stylesheet" />
+    <link
+      href="/static/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <style media="screen">
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        /* Set background image */
+        background: url("{% static 'img/cimg3.jpg' %}") no-repeat center center
+          fixed;
+        background-size: cover;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.3
+        ); /* Optional: This creates a semi-transparent overlay */
+        min-height: 100vh; /* Ensure it covers the full height of the viewport */
+      }
+      .background {
+        width: 430px;
+        height: 520px;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+      }
+      .background .shape {
+        height: 200px;
+        width: 200px;
+        position: absolute;
+        border-radius: 50%;
+      }
+      .shape:first-child {
+        background: linear-gradient(#1845ad, #23a2f6);
+        left: -80px;
+        top: -80px;
+      }
+      .shape:last-child {
+        background: linear-gradient(to right, #ff512f, #f09819);
+        right: -30px;
+        bottom: -80px;
+      }
+      form {
+        height: 600px;
+        width: 400px;
+        background-color: rgba(255, 255, 255, 0.13);
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+        padding: 50px 35px;
+      }
+      form * {
+        font-family: "Poppins", sans-serif;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+        outline: none;
+        border: none;
+      }
+      form h3 {
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 42px;
+        text-align: center;
+      }
+      label {
+        display: block;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      input {
+        display: block;
+        height: 50px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.07);
+        border-radius: 3px;
+        padding: 0 10px;
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: 300;
+      }
+      ::placeholder {
+        color: #e5e5e5;
+      }
+      button {
+        margin-top: 50px;
+        width: 100%;
+        padding: 15px 0;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .social {
+        margin-top: 30px;
+        display: flex;
+      }
+      .social div {
+        background: red;
+        width: 150px;
+        border-radius: 3px;
+        padding: 5px 10px 10px 5px;
+        background-color: rgba(255, 255, 255, 0.27);
+        color: #eaf0fb;
+        text-align: center;
+      }
+      .social div:hover {
+        background-color: rgba(255, 255, 255, 0.47);
+      }
+      .social .fb {
+        margin-left: 25px;
+      }
+      .social i {
+        margin-right: 4px;
+      }
+
+      #link {
+        text-decoration: none; /* Initially, remove any underline */
+        transition: text-decoration-color 1s ease, text-decoration 1s ease; /* Smooth transition with delay */
+      }
+
+      #link:hover {
+        text-decoration: underline;
+        text-decoration-color: red; /* Set underline color to red */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Nav Bar Start -->
+    <div class="navbar navbar-expand-lg bg-light navbar-light">
+      <div class="container-fluid">
+        <a href="{% url 'index' %}" class="navbar-brand"
+          >Pizza <span>Zone</span></a
+        >
+        <button
+          type="button"
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarCollapse"
+        >
+          <div class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+            <!-- Show these links only when the user is logged in -->
+            <a
+              id="link"
+              style="font-weight: 700; color: white"
+              href="{% url 'index' %}"
+              class="nav-item nav-link active"
+              >Home</a
+            >
+            <a
+              id="link"
+              style="font-weight: 700; color: white"
+              href="{% url 'about' %}"
+              class="nav-item nav-link"
+              >About</a
+            >
+            <a
+              id="link"
+              style="font-weight: 700; color: white"
+              href="menu.html"
+              class="nav-item nav-link"
+              >Menu</a
+            >
+            <a
+              id="link"
+              style="font-weight: 700; color: white"
+              href="booking.html"
+              class="nav-item nav-link"
+              >Booking</a
+            >
+            <a
+              id="link"
+              style="font-weight: 700; color: white"
+              href="{% url 'contact' %}"
+              class="nav-item nav-link"
+              >Contact</a
+            >
+            {% else %}
+            <!-- Show these links only when the user is not logged in -->
+            <a
+              id="link"
+              style="font-weight: 700; color: white; margin-right: 10px"
+              href="{% url 'login' %}"
+              class="nav-item nav-link"
+              >Login</a
+            >
+            <a
+              id="link"
+              style="font-weight: 700; color: white"
+              href="{% url 'register' %}"
+              class="nav-item nav-link"
+              >Sign-up</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Nav Bar End -->
+
+    <div class="background">
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+
+    <form method="post">
+      {% if wrong %}
+      <div class="alert alert-danger">{{wrong}}</div>
+      {% endif %}
+      <h3>Login Here</h3>
+      {% csrf_token %}
+      <label for="username">Username</label>
+      <input
+        type="text"
+        placeholder="Enter Username"
+        id="username"
+        name="username"
+      />
+
+      <label for="password">Password</label>
+      <input type="password" placeholder="Password" id="password" name="pass" />
+
+      <button type="submit" class="btn btn-outline-success">Click me!</button>
+
+      <a
+        href="{% url 'register' %}"
+        style="display: block; text-align: center; margin-top: 20px"
+        >Create an account</a
+      >
+    </form>
+  </body>
+</html>
